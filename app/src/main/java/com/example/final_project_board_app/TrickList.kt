@@ -20,7 +20,6 @@ class TrickList : AppCompatActivity() {
 
         recyclerView.adapter = TrickListAdapter(generateContent(20))
 
-        // default behavior
         recyclerView.layoutManager = LinearLayoutManager(this)
 
 
@@ -32,14 +31,8 @@ class TrickList : AppCompatActivity() {
             Toast.makeText(this, "You Refreshed", Toast.LENGTH_SHORT).show()
             recyclerView.adapter = TrickListAdapter(generateContent(20))
 
-            // this will hide the refreshing animation after it is used
             swipeToRefresh.isRefreshing = false
         }
-
-        // allows for horizontal scroll
-        //recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        // recyclerView.setHasFixedSize(true)
     }
 
     fun generateContent(size: Int): ArrayList<Trick> {
