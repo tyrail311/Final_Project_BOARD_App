@@ -18,7 +18,7 @@ class TrickList : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
-        recyclerView.adapter = TrickListAdapter(generateContent(20))
+        recyclerView.adapter = TrickListAdapter(generateContent(40))
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -29,7 +29,7 @@ class TrickList : AppCompatActivity() {
         val swipeToRefresh = findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh)
         swipeToRefresh.setOnRefreshListener {
             Toast.makeText(this, "You Refreshed", Toast.LENGTH_SHORT).show()
-            recyclerView.adapter = TrickListAdapter(generateContent(20))
+            recyclerView.adapter = TrickListAdapter(generateContent(40))
 
             swipeToRefresh.isRefreshing = false
         }
