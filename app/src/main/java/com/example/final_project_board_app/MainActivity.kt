@@ -1,6 +1,7 @@
 package com.example.final_project_board_app
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,7 @@ import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private val FILE_NAME = "Names"
+    private val REQUEST_CODE = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +63,8 @@ class MainActivity : AppCompatActivity() {
         editor.putString("player2", person2)
         editor.apply()
 
-
+        val intent = Intent(this, TrickList::class.java)
+        startActivityForResult(intent, REQUEST_CODE)
     }
 
     private fun View.hideKeyboard() {
