@@ -6,16 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private val FILE_NAME = "Names"
@@ -30,31 +21,14 @@ class MainActivity : AppCompatActivity() {
         val person1 = findViewById<EditText>(R.id.editTextPersonName).text.toString()
         val person2 = findViewById<EditText>(R.id.editTextPersonName2).text.toString()
 
-
-        val builder1 = AlertDialog.Builder(this)
-        val builder2 = AlertDialog.Builder(this)
-        builder1.setTitle("Player 1 Name Empty")
-        builder1.setMessage("Player 1 name cannot be empty. Please enter a name")
-        builder1.setIcon(android.R.drawable.ic_delete)
-        builder1.setNeutralButton("Okay"){dialog, which -> findViewById<EditText>(R.id.editTextPersonName).requestFocus() }
-
-        builder2.setTitle("Player 2 Name Empty")
-        builder2.setMessage("Player 2 name cannot be empty. Please enter a name")
-        builder2.setIcon(android.R.drawable.ic_delete)
-        builder2.setNeutralButton("Okay"){dialog, which -> findViewById<EditText>(R.id.editTextPersonName2).requestFocus() }
-
         if(person1.isEmpty())
         {
-            val dialog = builder1.create()
-            dialog.show()
-            return
+            makeDialog("Player 1 Name Empty", "Player 1 name cannot be empty. Please enter a name", R.id.editTextPersonName)
         }
 
         if(person2.isEmpty())
         {
-            val dialog = builder2.create()
-            dialog.show()
-            return
+            makeDialog("Player 2 Name Empty", "Player 2 name cannot be empty. Please enter a name", R.id.editTextPersonName2)
         }
 
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
@@ -65,6 +39,16 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, TrickList::class.java)
         startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    private fun makeDialog(title : String, message: String, view: Int){
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setNeutralButton("Okay"){dialog, which -> findViewById<EditText>(view).requestFocus() }
+        builder.setIcon(android.R.drawable.ic_delete)
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun View.hideKeyboard() {

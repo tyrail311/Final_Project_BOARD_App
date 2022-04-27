@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.final_project_board_app.Trick
 
 class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
     private val TAG = "MyRecyclerView"
@@ -19,7 +18,6 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
 
         val trickName = itemView.findViewById<TextView>(R.id.trick_name)
         val trickDifficulty = itemView.findViewById<TextView>(R.id.trick_difficulty)
-        val trickDifficulty2 = itemView.findViewById<TextView>(R.id.trick_difficulty)
         val trickImage = itemView.findViewById<ImageView>(R.id.trick_image)
 
         init {
@@ -42,7 +40,6 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
 
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -61,7 +58,6 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
         Glide.with(holder.itemView.context)
             .load(currentItem.trickImage)
             .into(holder.trickImage)
-
     }
 
     override fun getItemCount(): Int {
