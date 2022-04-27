@@ -43,64 +43,29 @@ class TrickList : AppCompatActivity() {
         }
     }
 
-//    private fun scanDatabase(){
-//        val tricks = fireBaseDb.collection("tricks")
-//        val postListener = object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                val post = dataSnapshot.getValue<Post>()
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-//            }
-//        }
-//        postReference.addValueEventListener(postListener)
-//
-//        fireBaseDb.child("users").child(id).get().addOnSuccessListener {
-//            Log.i("firebase", "Got value ${it.value}")
-//        }.addOnFailureListener{
-//            Log.e("firebase", "Error getting data", it)
-//        }
-//        tricks
-//            .get()
-//            .addOnCompleteListener(OnCompleteListener<QuerySnapshot?> { document ->
-//                if (document.isSuccessful) {
-//                    var count = 0
-//                    for (document in document.result) {
-//                        count++
-//                    }
-////                    for(trick in 0..count)
-////                    {
-////                        trickList.add(trick)
-////                    }
-//                } else {
-//                    Log.d(TAG, "Error getting documents: ", document.exception)
-//                }
-//            })
-//    }
-
     fun addTrick(view: View) {
         val tricks = fireBaseDb.collection("tricks")
-        var id = tricks.orderBy("id", Query.Direction.DESCENDING)
+        var maxId = ""
+        tricks.orderBy("id", Query.Direction.DESCENDING)
             .limit(1)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents)
                 {
-                    Log.d(TAG, "${document.id})=>${document.data.get("id")}")
+                    maxId = "${document.id}=>${document.data["id"]}"
+                    Log.d(TAG, "${document.id}=>${document.data["id"]}")
+//                    Log.d(TAG, "${document.id}=>${document.data["trick"]}")
+//                    Log.d(TAG, "${document.id}=>${document.data["trick"]}")
                 }
 
             }
         val trick = hashMapOf(
-//            "id" to maxId++,
+            "id" to maxId.toInt() + 1,
             "trick" to trick_name_input.text.toString(),
             "difficulty" to trick_difficulty_input.text.toString()
         )
         val documentId = tricks.document().id
         tricks.document(documentId).set(trick)
-//        trickList.add(trick.get(trick))
         showDialog("Success", "Contact has been added.")
         findViewById<EditText>(R.id.trick_difficulty_input).hideKeyboard()
         findViewById<EditText>(R.id.trick_name_input).hideKeyboard()
