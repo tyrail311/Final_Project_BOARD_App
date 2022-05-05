@@ -22,10 +22,10 @@
         android:text="Play Video" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/letsgo_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="changeScreen"
+        android:onClick="letsgo"
         android:text="Let's Go!" />
 
 

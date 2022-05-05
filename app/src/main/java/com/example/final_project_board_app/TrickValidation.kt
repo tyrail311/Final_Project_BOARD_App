@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
@@ -25,6 +27,10 @@ class TrickValidation: AppCompatActivity() {
     var player1turn = true
 
     lateinit var continueButton: Button
+    lateinit var p1_no: Button
+    lateinit var p1_yes: Button
+    lateinit var p2_no: Button
+    lateinit var p2_yes: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,16 +45,19 @@ class TrickValidation: AppCompatActivity() {
         player1 = sharedPreferences.getString("player1", "")?: ""
         player2 = sharedPreferences.getString("player2", "")?: ""
 
-        val p1_no = findViewById<Button>(R.id.player1_no)
-        val p1_yes = findViewById<Button>(R.id.player1_yes)
-        val p2_no = findViewById<Button>(R.id.player2_no)
-        val p2_yes = findViewById<Button>(R.id.player2_yes)
+        p1_no = findViewById<Button>(R.id.player1_no)
+        p1_yes = findViewById<Button>(R.id.player1_yes)
+        p2_no = findViewById<Button>(R.id.player2_no)
+        p2_yes = findViewById<Button>(R.id.player2_yes)
         continueButton = findViewById<Button>(R.id.continue_button)
 
         findViewById<TextView>(R.id.player1_trick_land).text = "Did $player1 land the trick?"
         findViewById<TextView>(R.id.player2_trick_land).text = "Did $player2 land the trick?"
-        findViewById<Button>(R.id.restart_button).setVisibility(View.GONE)
 
+        findViewById<TextView>(R.id.player1_score_text).text = player1score
+        findViewById<TextView>(R.id.player2_score_text).text = player2score
+
+        checkGameFinish()
         if (player1turn) //Player 1's turn to choose trick
         {
             p2_yes.setVisibility(View.GONE)
@@ -58,6 +67,7 @@ class TrickValidation: AppCompatActivity() {
                 Toast.makeText(this, "$player1 didn't land his trick, onto $player2's turn", Toast.LENGTH_SHORT).show()
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+
             }
             p1_yes.setOnClickListener{
                 Toast.makeText(this, "Nice one $player1", Toast.LENGTH_SHORT).show()
@@ -77,6 +87,11 @@ class TrickValidation: AppCompatActivity() {
                 findViewById<TextView>(R.id.player2_score_text).text = player2score
                 buttonDisable(p2_no)
                 buttonDisable(p2_yes)
+                if(player2count == 5)
+                {
+                    findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player1 wins!!"
+                    buttonDisable(continueButton)
+                }
             }
 
         }
@@ -108,6 +123,11 @@ class TrickValidation: AppCompatActivity() {
                 findViewById<TextView>(R.id.player1_score_text).text = player1score
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+                if(player1count == 5)
+                {
+                    findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player2 wins!!"
+                    buttonDisable(continueButton)
+                }
             }
         }
 
@@ -118,28 +138,35 @@ class TrickValidation: AppCompatActivity() {
             startActivity(intent)
         }
 
-        if(player1count == 5)
-        {
-            findViewById<TextView>(R.id.gameover_text).text = "GAME OVER!    $player2 wins!!"
-            gameover()
-        }
 
-        if(player2count == 5)
-        {
-            findViewById<TextView>(R.id.gameover_text).text = "GAME OVER!    $player1 wins!!"
-            gameover()
-        }
 
-        findViewById<Button>(R.id.restart_button).setOnClickListener{
-            sharedPreferences.edit().clear().commit()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 
     override fun onStop() {
         super.onStop()
         sharePref()
+    }
+
+    fun checkGameFinish(){
+        if(player1count >= 5)
+        {
+            findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player2 wins!!"
+            buttonDisable(continueButton)
+            buttonDisable(p1_no)
+            buttonDisable(p1_yes)
+            buttonDisable(p2_no)
+            buttonDisable(p2_yes)
+        }
+        if(player2count >= 5)
+        {
+            findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player1 wins!!"
+            buttonDisable(continueButton)
+            buttonDisable(p1_no)
+            buttonDisable(p1_yes)
+            buttonDisable(p2_no)
+            buttonDisable(p2_yes)
+        }
     }
 
     fun updateScore(count: Int): String{
@@ -172,9 +199,20 @@ class TrickValidation: AppCompatActivity() {
         button.setBackgroundColor(button.getContext().getResources().getColor(androidx.appcompat.R.color.material_grey_800))
     }
 
-    fun gameover(){
-        buttonDisable(continueButton)
-        findViewById<Button>(R.id.restart_button).setVisibility(View.VISIBLE)
+    fun restartGame(view: View){
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Restart Game?")
+        builder.setMessage("All player names and scores will be deleted. Are you sure you want to continue?")
+        builder.setIcon(android.R.drawable.ic_delete)
+        builder.setPositiveButton("Yes"){dialog, which ->
+            sharedPreferences.edit().clear().commit()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("No"){dialog, which -> }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 }

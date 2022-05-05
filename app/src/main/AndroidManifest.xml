@@ -17,6 +17,8 @@
         <activity
             android:name=".TrickList"
             android:exported="false"/>
+        <activity android:name=".TrickValidation"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

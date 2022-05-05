@@ -23,6 +23,8 @@ import java.util.ArrayList
 
 class VideoPlayer: YouTubeBaseActivity(){
 
+    val REQUEST_CODE = 555
+
     val API_KEY = "AIzaSyAzGHbTYqdm8-iB416awVQwo3yPODxwWw4"
     val VIDEO = "t8rCNbK7Aio"
 
@@ -53,8 +55,7 @@ class VideoPlayer: YouTubeBaseActivity(){
             })
         }
     }
-
-    fun changeScreen(view: View){
+    fun letsgo(view: View){
         val intent = Intent(this, TrickValidation::class.java)
         startActivity(intent)
     }

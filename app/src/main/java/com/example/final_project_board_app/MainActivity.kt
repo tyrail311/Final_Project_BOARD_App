@@ -21,12 +21,21 @@ class MainActivity : AppCompatActivity() {
     private val FILE_NAME = "Board"
     private val REQUEST_CODE = 123
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        findViewById<Button>(R.id.resume_button).setVisibility(View.GONE)
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        if(sharedPreferences.contains("player1"))
+        {
+            findViewById<Button>(R.id.resume_button).setVisibility(View.VISIBLE)
+        }
     }
     fun startGame(view: View)
     {
+        val sharedPref = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        sharedPref.edit().clear().commit()
         val person1 = findViewById<EditText>(R.id.editTextPersonName).text.toString()
         val person2 = findViewById<EditText>(R.id.editTextPersonName2).text.toString()
 
@@ -67,14 +76,19 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
-    fun youtube(view: View){
+    /*fun youtube(view: View){
         val intent = Intent(this, VideoPlayer::class.java)
         startActivity(intent)
-    }
+    }*/
 
     private fun View.hideKeyboard() {
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun resumeGame(view: View){
+        val intent = Intent(this, TrickValidation::class.java)
+        startActivity(intent)
     }
 }

@@ -1,6 +1,8 @@
 package com.example.final_project_board_app
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -60,5 +62,10 @@ class TrickList : AppCompatActivity() {
         trickList.reverse()
 
         return trickList
+    }
+
+    fun youtube2(view: View){
+        val intent = Intent(this, VideoPlayer::class.java)
+        startActivity(intent)
     }
 }
