@@ -18,7 +18,7 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
 
         val trickName = itemView.findViewById<TextView>(R.id.trick_name)
         val trickDifficulty = itemView.findViewById<TextView>(R.id.trick_difficulty)
-        val trickImage = itemView.findViewById<ImageView>(R.id.trick_image)
+//        val trickImage = itemView.findViewById<ImageView>(R.id.trick_image)
 
         init {
             itemView.setOnClickListener {
@@ -52,12 +52,12 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = tricks[position]
-        holder.trickName.text = currentItem.trickName
-        holder.trickDifficulty.text = currentItem.trickDifficulty
+        holder.trickName.text = currentItem.trick
+        holder.trickDifficulty.text = currentItem.difficulty
 
         Glide.with(holder.itemView.context)
-            .load(currentItem.trickImage)
-            .into(holder.trickImage)
+            .load(currentItem.link)
+//            .into(holder.trickImage)
     }
 
     override fun getItemCount(): Int {
