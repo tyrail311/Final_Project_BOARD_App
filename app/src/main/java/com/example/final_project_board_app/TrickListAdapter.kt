@@ -1,5 +1,6 @@
 package com.example.final_project_board_app
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
+class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
     private val TAG = "MyRecyclerView"
     private var count = 1
 
@@ -23,17 +25,15 @@ class TrickListAdapter(private val tricks: ArrayList<Trick>): RecyclerView.Adapt
         init {
             itemView.setOnClickListener {
                 val selectedPosition = adapterPosition
-                Toast.makeText(
-                    itemView.context,
-                    "You clicked $selectedPosition",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                val myIntent = Intent(this, TrickValidation::class.java)
+//                startActivity(myIntent)
             }
             itemView.setOnLongClickListener {
 
                 val selectedPosition = adapterPosition
 
-                tricks.removeAt(selectedPosition)
+//                tricks.removeAt(selectedPosition)
+//                tricks.(selectedPosition)
                 notifyItemRemoved(selectedPosition)
 
                 return@setOnLongClickListener true

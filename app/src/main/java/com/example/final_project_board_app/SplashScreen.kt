@@ -5,22 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.PersistableBundle
-import kotlinx.android.synthetic.main.splash_screen.*
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreen : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.splash_screen)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash_screen)
         supportActionBar?.hide()
         snowflake.animate().apply {
-            duration = 3000 // 1 second
+            duration = 3000 // 3 seconds
             rotationX(360f) // rotate 360 degrees on Y axis
         }.start()
         Handler(Looper.getMainLooper()).postDelayed({
-            val myIntent = Intent(this, MainActivity::class.java)
+            val myIntent = Intent(this, RegisterActivity::class.java)
             startActivity(myIntent)
             finish()
-        }, 5000) // 2 seconds delay
+        }, 5000) // 5 second delay
     }
 }
