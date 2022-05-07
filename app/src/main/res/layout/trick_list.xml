@@ -26,10 +26,10 @@
         android:id="@+id/player_turn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="4dp"
         android:text="It is name's turn:"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +76,6 @@
         android:layout_height="wrap_content"
         android:text="If the trick does not exist in the list above, add a new one below"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_turn" /><![CDATA[
 
@@ -117,8 +116,8 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="youtube2"
-        android:text="Button"
+        android:onClick="addTrick"
+        android:text="add trick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"

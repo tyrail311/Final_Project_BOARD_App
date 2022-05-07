@@ -13,7 +13,7 @@ class SplashScreen : AppCompatActivity() {
         supportActionBar?.hide()
         snowflake.animate().apply {
             duration = 3000 // 3 seconds
-            rotationX(360f) // rotate 360 degrees on Y axis
+            rotationX(360f) // rotate 360 degrees on x axis
         }.start()
         Handler(Looper.getMainLooper()).postDelayed({
             val myIntent = Intent(this, RegisterActivity::class.java)

@@ -104,7 +104,8 @@ class TrickList : AppCompatActivity() {
 
                 val documentId = tricks.document().id
                 tricks.document(documentId).set(trick)
-                showDialog("Success", "Contact has been added.")
+                showDialog("Success!", "Trick has been added.")
+                clearTexts()
                 findViewById<EditText>(R.id.trick_difficulty_input).hideKeyboard()
                 findViewById<EditText>(R.id.trick_name_input).hideKeyboard()
             }
@@ -149,6 +150,7 @@ class TrickList : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(Message)
         builder.show()
+        builder.setPositiveButton("OK"){ dialog, which -> }
     }
 
     private fun View.hideKeyboard() {
@@ -157,8 +159,9 @@ class TrickList : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    fun youtube2(view: View){
-        val intent = Intent(this, VideoPlayer::class.java)
-        startActivity(intent)
+    private fun clearTexts(){
+        trick_difficulty_input.text.clear()
+        trick_name_input.text.clear()
     }
+
 }

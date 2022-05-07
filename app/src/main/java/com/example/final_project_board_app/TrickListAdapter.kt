@@ -1,5 +1,6 @@
 package com.example.final_project_board_app
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
     private val TAG = "MyRecyclerView"
     private var count = 1
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View, context : Context?) : RecyclerView.ViewHolder(itemView) {
 
         val trickName = itemView.findViewById<TextView>(R.id.trick_name)
         val trickDifficulty = itemView.findViewById<TextView>(R.id.trick_difficulty)
@@ -25,19 +26,10 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
         init {
             itemView.setOnClickListener {
                 val selectedPosition = adapterPosition
-//                val myIntent = Intent(this, TrickValidation::class.java)
-//                startActivity(myIntent)
-            }
-            itemView.setOnLongClickListener {
-
-                val selectedPosition = adapterPosition
-
-//                tricks.removeAt(selectedPosition)
-//                tricks.(selectedPosition)
-                notifyItemRemoved(selectedPosition)
-
-                return@setOnLongClickListener true
-
+                val myIntent = Intent(context, TrickValidation::class.java)
+                if (context != null) {
+                    startActivity(context, myIntent, null)
+                }
             }
         }
     }
@@ -46,8 +38,7 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
         Log.d(TAG, "onCreateViewHolder: ${count++}")
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.trick, parent, false)
-
-        return MyViewHolder(view)
+        return MyViewHolder(view, null)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -55,9 +46,9 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
         holder.trickName.text = currentItem.trick
         holder.trickDifficulty.text = currentItem.difficulty
 
-        Glide.with(holder.itemView.context)
-            .load(currentItem.link)
-//            .into(holder.trickImage)
+//        Glide.with(holder.itemView.context)
+//            .load(currentItem.link)
+////            .into(holder.trickImage)
     }
 
     override fun getItemCount(): Int {
