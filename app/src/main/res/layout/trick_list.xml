@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_turn" />
+        app:layout_constraintTop_toBottomOf="@+id/add_trick" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_to_refresh"
@@ -59,15 +61,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="If the trick does not exist in the list above, add a new one below"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_turn" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="227dp"
-        android:layout_height="48dp"
+        android:id="@+id/trick_name_input"
+        android:layout_width="240dp"
+        android:layout_height="46dp"
         android:ems="10"
         android:hint="Enter your trick name here"
         android:inputType="textPersonName"
@@ -75,6 +77,22 @@
         app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="103dp" />
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+        android:id="@+id/trick_difficulty_input"
+        android:layout_width="242dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Enter your trick difficulty here"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trick_name_input" />
 
     <Button
         android:id="@+id/button2"
@@ -87,5 +105,11 @@
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toEndOf="@+id/player_turn"
         app:layout_constraintTop_toTopOf="parent" />
+        android:onClick="addTrick"
+        android:text="Add trick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trick_difficulty_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

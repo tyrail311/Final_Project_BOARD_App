@@ -10,22 +10,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trick name:"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="30dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/trick_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Difficulty:"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/trick_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="11dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
