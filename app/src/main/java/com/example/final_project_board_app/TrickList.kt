@@ -1,5 +1,9 @@
 package com.example.final_project_board_app
 
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -22,7 +26,11 @@ import java.lang.StringBuilder
 
 
 class TrickList : AppCompatActivity() {
-    private val FILE_NAME = "Names"
+    private val FILE_NAME = "Board"
+
+    lateinit var player1 : String
+    lateinit var player2 : String
+    var player1turn = true
     val TAG = "firebase"
     private lateinit var fireBaseDb: FirebaseFirestore
 
@@ -40,6 +48,17 @@ class TrickList : AppCompatActivity() {
             swipeToRefresh.isRefreshing = false
         }
 
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        player1turn =  sharedPreferences.getBoolean("player1turn", true)
+        player1 = sharedPreferences.getString("player1", "")?: ""
+        player2 = sharedPreferences.getString("player2", "")?: ""
+
+        if(player1turn)
+            findViewById<TextView>(R.id.player_turn).text = "It is $player1's turn..."
+        else
+            findViewById<TextView>(R.id.player_turn).text = "It is $player2's turn..."
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         // Get real time update
         fireBaseDb.collection("tricks")
             .orderBy("id")
@@ -138,5 +157,10 @@ class TrickList : AppCompatActivity() {
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun youtube2(view: View){
+        val intent = Intent(this, VideoPlayer::class.java)
+        startActivity(intent)
     }
 }
