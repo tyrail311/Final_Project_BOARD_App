@@ -138,9 +138,6 @@ class TrickValidation: AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
-
     }
 
     override fun onStop() {

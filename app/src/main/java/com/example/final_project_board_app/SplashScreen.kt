@@ -1,5 +1,4 @@
 package com.example.final_project_board_app
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
