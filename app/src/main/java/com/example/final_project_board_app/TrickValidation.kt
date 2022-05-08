@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.trick_validation.*
 
 class TrickValidation: AppCompatActivity() {
     private val TAG = "TrickValidation"
@@ -66,6 +67,8 @@ class TrickValidation: AppCompatActivity() {
         p2_no = findViewById<Button>(R.id.player2_no)
         p2_yes = findViewById<Button>(R.id.player2_yes)
         continueButton = findViewById<Button>(R.id.continue_button)
+        player1_text.text = "$player1"
+        player2_text.text = "$player2"
 
         findViewById<TextView>(R.id.player1_trick_land).text = "Did $player1 land the $trick?"
         findViewById<TextView>(R.id.player2_trick_land).text = "Did $player2 land the $trick?"
@@ -175,11 +178,19 @@ class TrickValidation: AppCompatActivity() {
             val intent = Intent(this, TrickList::class.java)
             startActivity(intent)
         }
-
     }
 
     override fun onStop() {
         super.onStop()
+        sharePref()
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("activity", "TrickValidation")
+        editor.apply()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         sharePref()
     }
 
@@ -255,8 +266,8 @@ class TrickValidation: AppCompatActivity() {
         else{
             Toast.makeText(this, "Sorry, there is no YouTube video for this trick", Toast.LENGTH_SHORT).show()
         }
-
     }
+
     fun restartGame(view: View){
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         val builder = AlertDialog.Builder(this)

@@ -20,18 +20,21 @@ class MainActivity : AppCompatActivity() {
     private val FILE_NAME = "Board"
     private val REQUEST_CODE = 123
     private val TAG = "logout"
+    private var activity = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        activity = sharedPreferences.getString("activity", "") ?: ""
+        Log.d(TAG, "$activity")
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null)
             startRegisterActivity()
         else
         {
             findViewById<Button>(R.id.resume_button).setVisibility(View.GONE)
-            val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
             if(sharedPreferences.contains("player1"))
             {
                 findViewById<Button>(R.id.resume_button).setVisibility(View.VISIBLE)
@@ -116,7 +119,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun resumeGame(view: View){
-        val intent = Intent(this, TrickValidation::class.java)
+        var intent: Intent? = null
+        if (activity == "TrickList")
+            intent = Intent(this, TrickList::class.java)
+        else
+            intent = Intent(this, TrickValidation::class.java)
+
         startActivity(intent)
     }
 }

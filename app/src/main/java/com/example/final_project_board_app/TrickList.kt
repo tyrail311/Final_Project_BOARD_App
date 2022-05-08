@@ -142,4 +142,12 @@ class TrickList : AppCompatActivity() {
         trick_difficulty_input.text.clear()
         trick_name_input.text.clear()
     }
+
+    override fun onStop() {
+        super.onStop()
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("activity", "TrickList")
+        editor.apply()
+    }
 }

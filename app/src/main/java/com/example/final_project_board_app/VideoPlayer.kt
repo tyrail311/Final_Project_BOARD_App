@@ -11,7 +11,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
 
-class VideoPlayer: YouTubeBaseActivity(){
+class VideoPlayer: YouTubeBaseActivity() {
 
     val REQUEST_CODE = 555
     private val TAG = "VideoPlayer"
@@ -26,8 +26,8 @@ class VideoPlayer: YouTubeBaseActivity(){
         val youtubePlayer = findViewById<YouTubePlayerView>(R.id.YoutubePlayerView)
         val playButton = findViewById<Button>(R.id.play)
 
-        playButton.setOnClickListener{
-            youtubePlayer.initialize(API_KEY, object : YouTubePlayer.OnInitializedListener{
+        playButton.setOnClickListener {
+            youtubePlayer.initialize(API_KEY, object : YouTubePlayer.OnInitializedListener {
                 override fun onInitializationSuccess(
                     provider: YouTubePlayer.Provider?,
                     player: YouTubePlayer?,
@@ -41,13 +41,23 @@ class VideoPlayer: YouTubeBaseActivity(){
                     p0: YouTubePlayer.Provider?,
                     p1: YouTubeInitializationResult?
                 ) {
-                    Toast.makeText(this@VideoPlayer, "Failed to load video", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@VideoPlayer, "Failed to load video", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
         }
     }
-    fun letsgo(view: View){
+
+    fun letsgo(view: View) {
         val intent = Intent(this, TrickValidation::class.java)
         startActivity(intent)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("activity", "TrickValidation")
+        editor.apply()
     }
 }
