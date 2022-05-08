@@ -16,12 +16,13 @@ class VideoPlayer: YouTubeBaseActivity(){
     val REQUEST_CODE = 555
     private val TAG = "VideoPlayer"
     val API_KEY = "AIzaSyAzGHbTYqdm8-iB416awVQwo3yPODxwWw4"
+    val FILE_NAME = "Board"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.video_player)
-        val link = intent.getStringExtra("link")?: ""
-        Log.d(TAG, "$link")
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        var link = sharedPreferences.getString("link", "") ?: ""
         val youtubePlayer = findViewById<YouTubePlayerView>(R.id.YoutubePlayerView)
         val playButton = findViewById<Button>(R.id.play)
 

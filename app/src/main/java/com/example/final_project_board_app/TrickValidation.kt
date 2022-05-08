@@ -27,6 +27,8 @@ class TrickValidation: AppCompatActivity() {
 
     var player1turn = true
 
+    var trick = ""
+
     lateinit var continueButton: Button
     lateinit var p1_no: Button
     lateinit var p1_yes: Button
@@ -37,11 +39,11 @@ class TrickValidation: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.trick_validation)
 
-        val link = intent.getStringExtra("link")?: ""
-        val trick = intent.getStringExtra("trick")?: ""
+        //val link = intent.getStringExtra("link")?: ""
+        //val trick = intent.getStringExtra("trick")?: ""
         val id = intent.getIntExtra("id", -1)
 
-        Log.d(TAG, "link: $link, trick: $trick, id: $id")
+        //Log.d(TAG, "link: $link, trick: $trick, id: $id")
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         player1score = sharedPreferences.getString("player1score", "") ?: ""
         player2score = sharedPreferences.getString("player2score", "") ?: ""
@@ -50,6 +52,7 @@ class TrickValidation: AppCompatActivity() {
         player1turn =  sharedPreferences.getBoolean("player1turn", true)
         player1 = sharedPreferences.getString("player1", "")?: ""
         player2 = sharedPreferences.getString("player2", "")?: ""
+        trick = sharedPreferences.getString("trick", "")?:""
 
         p1_no = findViewById<Button>(R.id.player1_no)
         p1_yes = findViewById<Button>(R.id.player1_yes)
