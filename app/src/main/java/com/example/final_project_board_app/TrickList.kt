@@ -38,12 +38,6 @@ class TrickList : AppCompatActivity() {
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(divider)
         realtimeUpdate()
-        val swipeToRefresh = findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh)
-        swipeToRefresh.setOnRefreshListener {
-            realtimeUpdate()
-            swipeToRefresh.isRefreshing = false
-        }
-
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         player1turn =  sharedPreferences.getBoolean("player1turn", true)
         player1 = sharedPreferences.getString("player1", "")?: ""
@@ -53,7 +47,6 @@ class TrickList : AppCompatActivity() {
             findViewById<TextView>(R.id.player_turn).text = "It is $player1's turn..."
         else
             findViewById<TextView>(R.id.player_turn).text = "It is $player2's turn..."
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         realtimeUpdate()
     }
 

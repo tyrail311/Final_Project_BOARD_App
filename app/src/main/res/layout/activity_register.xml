@@ -9,7 +9,7 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="B.O.A.R.D"
+        android:text="@string/b_o_a_r_d"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,11 +24,13 @@
         android:layout_height="184dp"
         android:layout_marginBottom="128dp"
         android:background="#03A9F4"
+        android:contentDescription="@string/logo"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_snowflake_snow_svgrepo_com" />
+        app:srcCompat="@drawable/ic_snowflake_snow_svgrepo_com"
+        tools:ignore="ImageContrastCheck" />
 
     <Button
         android:id="@+id/button"
@@ -37,9 +39,9 @@
         android:layout_marginBottom="160dp"
         android:background="#00000000"
         android:onClick="loginButton"
-        android:text="login/register"
+        android:text="@string/login_register"
         android:textColor="#2196F3"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
