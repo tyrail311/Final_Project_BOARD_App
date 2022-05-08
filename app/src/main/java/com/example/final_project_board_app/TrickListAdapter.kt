@@ -6,14 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
 
 class TrickListAdapter(private val tricks: List<Trick>, private val context: Context): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
     private val TAG = "MyRecyclerView"
@@ -34,7 +29,6 @@ class TrickListAdapter(private val tricks: List<Trick>, private val context: Con
                 editor.putString("trick",tricks[selectedPosition].trick)
                 editor.apply()
                 val myIntent = Intent(itemView.context, TrickValidation::class.java)
-                //myIntent.putExtra("trick", tricks[selectedPosition].trick)
                 myIntent.putExtra("id", tricks.get(selectedPosition).id)
                 itemView.context.startActivity(myIntent)
             }
