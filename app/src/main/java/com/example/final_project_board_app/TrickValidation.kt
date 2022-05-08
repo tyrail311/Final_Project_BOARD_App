@@ -239,7 +239,7 @@ class TrickValidation: AppCompatActivity() {
         button.isEnabled = true
         button.isClickable = true
         button.setTextColor(getApplication().getResources().getColor(R.color.white))
-        button.setBackgroundColor(button.getContext().getResources().getColor(androidx.appcompat.R.color.material_deep_teal_200))
+        button.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_500))
     }
 
     fun trickHelp(view: View){
