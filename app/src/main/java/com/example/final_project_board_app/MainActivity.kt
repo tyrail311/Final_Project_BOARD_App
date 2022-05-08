@@ -25,16 +25,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<Button>(R.id.resume_button).setVisibility(View.GONE)
-        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
-        if(sharedPreferences.contains("player1"))
-        {
-            findViewById<Button>(R.id.resume_button).setVisibility(View.VISIBLE)
-        }
         val currentUser = FirebaseAuth.getInstance().currentUser
-
         if (currentUser == null)
             startRegisterActivity()
+        else
+        {
+            findViewById<Button>(R.id.resume_button).setVisibility(View.GONE)
+            val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+            if(sharedPreferences.contains("player1"))
+            {
+                findViewById<Button>(R.id.resume_button).setVisibility(View.VISIBLE)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

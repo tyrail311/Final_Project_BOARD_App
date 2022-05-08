@@ -111,7 +111,6 @@ class TrickList : AppCompatActivity() {
     }
 
     private fun realtimeUpdate() {
-
         fireBaseDb.collection("tricks")
             .orderBy("id", Query.Direction.ASCENDING)
             .addSnapshotListener{ snapshots, e ->
@@ -139,7 +138,7 @@ class TrickList : AppCompatActivity() {
 
     private fun showDataInRecyclerView(tricks: List<Trick>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = TrickListAdapter(tricks)
+        recyclerView.adapter = TrickListAdapter(tricks, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 

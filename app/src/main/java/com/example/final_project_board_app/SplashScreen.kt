@@ -16,9 +16,9 @@ class SplashScreen : AppCompatActivity() {
             rotationX(360f) // rotate 360 degrees on x axis
         }.start()
         Handler(Looper.getMainLooper()).postDelayed({
-            val myIntent = Intent(this, RegisterActivity::class.java)
+            val myIntent = Intent(this, MainActivity::class.java)
             startActivity(myIntent)
             finish()
-        }, 5000) // 5 second delay
+        }, 3000) // 5 second delay
     }
 }

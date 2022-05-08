@@ -26,12 +26,11 @@ class VideoPlayer: YouTubeBaseActivity(){
     val REQUEST_CODE = 555
 
     val API_KEY = "AIzaSyAzGHbTYqdm8-iB416awVQwo3yPODxwWw4"
-    val VIDEO = "t8rCNbK7Aio"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.video_player)
+        val videoLink = intent.getStringExtra("link")
         val youtubePlayer = findViewById<YouTubePlayerView>(R.id.YoutubePlayerView)
         val playButton = findViewById<Button>(R.id.play)
 
@@ -42,7 +41,7 @@ class VideoPlayer: YouTubeBaseActivity(){
                     player: YouTubePlayer?,
                     p2: Boolean
                 ) {
-                    player?.loadVideo(VIDEO)
+                    player?.loadVideo(videoLink)
                     player?.play()
                 }
 

@@ -2,6 +2,7 @@ package com.example.final_project_board_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class TrickValidation: AppCompatActivity() {
-
+    private val TAG = "TrickValidation"
     private val FILE_NAME = "Board"
 
     var player1 = ""
@@ -36,6 +37,11 @@ class TrickValidation: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.trick_validation)
 
+        val link = intent.getStringExtra("link")?: ""
+        val trick = intent.getStringExtra("trick")?: ""
+        val id = intent.getIntExtra("id", -1)
+
+        Log.d(TAG, "link: $link, trick: $trick, id: $id")
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         player1score = sharedPreferences.getString("player1score", "") ?: ""
         player2score = sharedPreferences.getString("player2score", "") ?: ""
@@ -51,8 +57,8 @@ class TrickValidation: AppCompatActivity() {
         p2_yes = findViewById<Button>(R.id.player2_yes)
         continueButton = findViewById<Button>(R.id.continue_button)
 
-        findViewById<TextView>(R.id.player1_trick_land).text = "Did $player1 land the trick?"
-        findViewById<TextView>(R.id.player2_trick_land).text = "Did $player2 land the trick?"
+        findViewById<TextView>(R.id.player1_trick_land).text = "Did $player1 land the $trick?"
+        findViewById<TextView>(R.id.player2_trick_land).text = "Did $player2 land the $trick?"
 
         findViewById<TextView>(R.id.player1_score_text).text = player1score
         findViewById<TextView>(R.id.player2_score_text).text = player2score

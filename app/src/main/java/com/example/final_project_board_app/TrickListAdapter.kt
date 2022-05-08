@@ -14,26 +14,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 
-class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
+class TrickListAdapter(private val tricks: List<Trick>, private val context: Context): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
     private val TAG = "MyRecyclerView"
     private var count = 1
-    private lateinit var fireBaseDb: FirebaseFirestore
 
-
-    inner class MyViewHolder(itemView: View, context : Context?) : RecyclerView.ViewHolder(itemView) {
-
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val trickName = itemView.findViewById<TextView>(R.id.trick_name)
         val trickDifficulty = itemView.findViewById<TextView>(R.id.trick_difficulty)
 //        val trickImage = itemView.findViewById<ImageView>(R.id.trick_image)
 
         init {
+
             itemView.setOnClickListener {
                 val selectedPosition = adapterPosition
+                val myIntent = Intent(itemView.context, TrickValidation::class.java)
+                myIntent.putExtra("link", tricks.get(selectedPosition).link)
+                myIntent.putExtra("trick", tricks.get(selectedPosition).trick)
+                myIntent.putExtra("id", tricks.get(selectedPosition).id)
 
-                val myIntent = Intent(context, TrickValidation::class.java)
-                if (context != null) {
-                    startActivity(context, myIntent, null)
-                }
+                itemView.context.startActivity(myIntent)
             }
         }
     }
@@ -42,7 +41,7 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
         Log.d(TAG, "onCreateViewHolder: ${count++}")
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.trick, parent, false)
-        return MyViewHolder(view, null)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
