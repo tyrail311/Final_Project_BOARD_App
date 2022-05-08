@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_register.*
 
 class TrickValidation: AppCompatActivity() {
     private val TAG = "TrickValidation"
@@ -28,6 +29,8 @@ class TrickValidation: AppCompatActivity() {
     var player1turn = true
 
     var trick = ""
+
+    var clickable = true
 
     lateinit var continueButton: Button
     lateinit var p1_no: Button
@@ -53,6 +56,7 @@ class TrickValidation: AppCompatActivity() {
         player1 = sharedPreferences.getString("player1", "")?: ""
         player2 = sharedPreferences.getString("player2", "")?: ""
         trick = sharedPreferences.getString("trick", "")?:""
+        clickable = sharedPreferences.getBoolean("clickable", true)
 
         p1_no = findViewById<Button>(R.id.player1_no)
         p1_yes = findViewById<Button>(R.id.player1_yes)
@@ -66,7 +70,16 @@ class TrickValidation: AppCompatActivity() {
         findViewById<TextView>(R.id.player1_score_text).text = player1score
         findViewById<TextView>(R.id.player2_score_text).text = player2score
 
+        buttonDisable(continueButton)
         checkGameFinish()
+        if(clickable == false){
+            buttonEnable(continueButton)
+            buttonDisable(p1_no)
+            buttonDisable(p1_yes)
+            buttonDisable(p2_no)
+            buttonDisable(p2_yes)
+        }
+
         if (player1turn) //Player 1's turn to choose trick
         {
             p2_yes.setVisibility(View.GONE)
@@ -76,6 +89,8 @@ class TrickValidation: AppCompatActivity() {
                 Toast.makeText(this, "$player1 didn't land his trick, onto $player2's turn", Toast.LENGTH_SHORT).show()
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+                buttonEnable(continueButton)
+                clickable = false
 
             }
             p1_yes.setOnClickListener{
@@ -84,11 +99,14 @@ class TrickValidation: AppCompatActivity() {
                 p2_no.setVisibility(View.VISIBLE)
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+
             }
             p2_yes.setOnClickListener{
                 Toast.makeText(this, "Both of you landed your trick! Still $player1's turn", Toast.LENGTH_SHORT).show()
                 buttonDisable(p2_no)
                 buttonDisable(p2_yes)
+                buttonEnable(continueButton)
+                clickable = false
             }
             p2_no.setOnClickListener{
                 player2count++
@@ -96,6 +114,8 @@ class TrickValidation: AppCompatActivity() {
                 findViewById<TextView>(R.id.player2_score_text).text = player2score
                 buttonDisable(p2_no)
                 buttonDisable(p2_yes)
+                buttonEnable(continueButton)
+                clickable = false
                 if(player2count == 5)
                 {
                     findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player1 wins!!"
@@ -113,6 +133,8 @@ class TrickValidation: AppCompatActivity() {
                 Toast.makeText(this, "$player2 didn't land his trick, onto $player1", Toast.LENGTH_SHORT).show()
                 buttonDisable(p2_no)
                 buttonDisable(p2_yes)
+                buttonEnable(continueButton)
+                clickable = false
             }
             p2_yes.setOnClickListener{
                 Toast.makeText(this, "There we go $player2!", Toast.LENGTH_SHORT).show()
@@ -125,6 +147,8 @@ class TrickValidation: AppCompatActivity() {
                 Toast.makeText(this, "Both of you landed your trick! Still $player2's turn", Toast.LENGTH_SHORT).show()
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+                buttonEnable(continueButton)
+                clickable = false
             }
             p1_no.setOnClickListener{
                 player1count++
@@ -132,6 +156,8 @@ class TrickValidation: AppCompatActivity() {
                 findViewById<TextView>(R.id.player1_score_text).text = player1score
                 buttonDisable(p1_no)
                 buttonDisable(p1_yes)
+                buttonEnable(continueButton)
+                clickable = false
                 if(player1count == 5)
                 {
                     findViewById<TextView>(R.id.gameover_text).text = "GAME OVER! $player2 wins!!"
@@ -141,9 +167,9 @@ class TrickValidation: AppCompatActivity() {
         }
 
         continueButton.setOnClickListener{
+            clickable = true
             sharePref()
             val intent = Intent(this, TrickList::class.java)
-            intent.putExtra("player1turn", player1turn)
             startActivity(intent)
         }
 
@@ -195,6 +221,7 @@ class TrickValidation: AppCompatActivity() {
         editor.putString("player2score", player2score)
         editor.putInt("player1count", player1count)
         editor.putInt("player2count", player2count)
+        editor.putBoolean("clickable", clickable)
         editor.apply()
     }
 
@@ -205,7 +232,18 @@ class TrickValidation: AppCompatActivity() {
         button.setBackgroundColor(button.getContext().getResources().getColor(androidx.appcompat.R.color.material_grey_800))
     }
 
+    fun buttonEnable(button: Button){
+        button.isEnabled = true
+        button.isClickable = true
+        button.setTextColor(getApplication().getResources().getColor(R.color.white))
+        button.setBackgroundColor(button.getContext().getResources().getColor(androidx.appcompat.R.color.material_deep_teal_200))
+    }
+
     fun trickHelp(view: View){
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("clickable", clickable)
+        editor.apply()
         val intent = Intent(this, VideoPlayer::class.java)
         startActivity(intent)
     }
