@@ -58,31 +58,39 @@ class TrickList : AppCompatActivity() {
     }
 
     fun addTrick(view: View) {
-        val tricks = fireBaseDb.collection("tricks")
-        var maxId = 0
-        var docId = ""
-        tricks.orderBy("id", Query.Direction.DESCENDING)
-            .limit(1)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents)
-                {
-                    docId = "${document.data["id"]}"
-                    maxId = docId.toInt()
-                }
-                val trick = hashMapOf(
-                    "id" to maxId + 1,
-                    "trick" to trick_name_input.text.toString(),
-                    "difficulty" to trick_difficulty_input.text.toString()
-                )
+        if (trick_difficulty_input.text.isEmpty() || trick_name_input.text.isEmpty())
+        {
+            showDialog("Error", "Please enter a value for BOTH trick name and trick difficulty.")
+            return
+        }
+        else{
+            val tricks = fireBaseDb.collection("tricks")
+            var maxId = 0
+            var docId = ""
+            tricks.orderBy("id", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents)
+                    {
+                        docId = "${document.data["id"]}"
+                        maxId = docId.toInt()
+                    }
+                    val trick = hashMapOf(
+                        "id" to maxId + 1,
+                        "trick" to trick_name_input.text.toString(),
+                        "difficulty" to trick_difficulty_input.text.toString()
+                    )
 
-                val documentId = tricks.document().id
-                tricks.document(documentId).set(trick)
-                showDialog("Success!", "Trick has been added.")
-                clearTexts()
-                findViewById<EditText>(R.id.trick_difficulty_input).hideKeyboard()
-                findViewById<EditText>(R.id.trick_name_input).hideKeyboard()
-            }
+                    val documentId = tricks.document().id
+                    tricks.document(documentId).set(trick)
+                    showDialog("Success!", "Trick has been added.")
+                    clearTexts()
+                    findViewById<EditText>(R.id.trick_difficulty_input).hideKeyboard()
+                    findViewById<EditText>(R.id.trick_name_input).hideKeyboard()
+                }
+        }
+
     }
 
     private fun realtimeUpdate() {
@@ -119,8 +127,9 @@ class TrickList : AppCompatActivity() {
         builder.setCancelable(true)
         builder.setTitle(title)
         builder.setMessage(Message)
-        builder.show()
         builder.setPositiveButton("OK"){ dialog, which -> }
+        builder.show()
+
     }
 
     private fun View.hideKeyboard() {
@@ -133,5 +142,4 @@ class TrickList : AppCompatActivity() {
         trick_difficulty_input.text.clear()
         trick_name_input.text.clear()
     }
-
 }

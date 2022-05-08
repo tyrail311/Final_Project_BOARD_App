@@ -32,6 +32,8 @@ class TrickValidation: AppCompatActivity() {
 
     var clickable = true
 
+    var link = ""
+
     lateinit var continueButton: Button
     lateinit var p1_no: Button
     lateinit var p1_yes: Button
@@ -57,6 +59,7 @@ class TrickValidation: AppCompatActivity() {
         player2 = sharedPreferences.getString("player2", "")?: ""
         trick = sharedPreferences.getString("trick", "")?:""
         clickable = sharedPreferences.getBoolean("clickable", true)
+        link = sharedPreferences.getString("link", "")?: ""
 
         p1_no = findViewById<Button>(R.id.player1_no)
         p1_yes = findViewById<Button>(R.id.player1_yes)
@@ -244,8 +247,15 @@ class TrickValidation: AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putBoolean("clickable", clickable)
         editor.apply()
-        val intent = Intent(this, VideoPlayer::class.java)
-        startActivity(intent)
+        if(sharedPreferences.contains("link"))
+        {
+            val intent = Intent(this, VideoPlayer::class.java)
+            startActivity(intent)
+        }
+        else{
+            Toast.makeText(this, "Sorry, there is no YouTube video for this trick", Toast.LENGTH_SHORT).show()
+        }
+
     }
     fun restartGame(view: View){
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
