@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.trick.*
 import kotlinx.android.synthetic.main.trick_list.*
 import java.lang.StringBuilder
 
-
 class TrickList : AppCompatActivity() {
     private val FILE_NAME = "Board"
 
@@ -114,7 +113,7 @@ class TrickList : AppCompatActivity() {
     private fun realtimeUpdate() {
 
         fireBaseDb.collection("tricks")
-            .orderBy("id")
+            .orderBy("id", Query.Direction.ASCENDING)
             .addSnapshotListener{ snapshots, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)

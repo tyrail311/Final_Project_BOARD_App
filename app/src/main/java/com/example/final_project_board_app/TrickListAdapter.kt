@@ -12,10 +12,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<TrickListAdapter.MyViewHolder>() {
     private val TAG = "MyRecyclerView"
     private var count = 1
+    private lateinit var fireBaseDb: FirebaseFirestore
+
 
     inner class MyViewHolder(itemView: View, context : Context?) : RecyclerView.ViewHolder(itemView) {
 
@@ -26,6 +29,7 @@ class TrickListAdapter(private val tricks: List<Trick>): RecyclerView.Adapter<Tr
         init {
             itemView.setOnClickListener {
                 val selectedPosition = adapterPosition
+
                 val myIntent = Intent(context, TrickValidation::class.java)
                 if (context != null) {
                     startActivity(context, myIntent, null)

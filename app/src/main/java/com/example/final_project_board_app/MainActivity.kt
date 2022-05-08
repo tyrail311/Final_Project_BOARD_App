@@ -4,14 +4,22 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private val FILE_NAME = "Board"
     private val REQUEST_CODE = 123
+    private val TAG = "logout"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +31,47 @@ class MainActivity : AppCompatActivity() {
         {
             findViewById<Button>(R.id.resume_button).setVisibility(View.VISIBLE)
         }
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser == null)
+            startRegisterActivity()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                // User chose the "logout" item, logout the user then
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+
+                AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // After logout, start the RegisterActivity again
+                            startRegisterActivity()
+                        }
+                        else {
+                            Log.e(TAG, "Task is not successful:${task.exception}")
+                        }
+                    }
+                true
+            }
+            else -> {
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+    private fun startRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        // Make sure to call finish(), otherwise the user would be able to go back to the MainActivity
+        finish()
     }
     fun startGame(view: View)
     {
@@ -51,10 +100,6 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
-    /*fun youtube(view: View){
-        val intent = Intent(this, VideoPlayer::class.java)
-        startActivity(intent)
-    }*/
     private fun makeDialog(title : String, message: String, view: Int){
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle(title)
