@@ -2,6 +2,7 @@ package com.example.final_project_board_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -13,13 +14,14 @@ import com.google.android.youtube.player.YouTubePlayerView
 class VideoPlayer: YouTubeBaseActivity(){
 
     val REQUEST_CODE = 555
-
+    private val TAG = "VideoPlayer"
     val API_KEY = "AIzaSyAzGHbTYqdm8-iB416awVQwo3yPODxwWw4"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.video_player)
-        val videoLink = intent.getStringExtra("link")
+        val link = intent.getStringExtra("link")?: ""
+        Log.d(TAG, "$link")
         val youtubePlayer = findViewById<YouTubePlayerView>(R.id.YoutubePlayerView)
         val playButton = findViewById<Button>(R.id.play)
 
@@ -30,7 +32,7 @@ class VideoPlayer: YouTubeBaseActivity(){
                     player: YouTubePlayer?,
                     p2: Boolean
                 ) {
-                    player?.loadVideo(videoLink)
+                    player?.loadVideo(link)
                     player?.play()
                 }
 

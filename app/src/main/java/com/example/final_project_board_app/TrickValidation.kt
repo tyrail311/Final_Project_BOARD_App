@@ -202,6 +202,10 @@ class TrickValidation: AppCompatActivity() {
         button.setBackgroundColor(button.getContext().getResources().getColor(androidx.appcompat.R.color.material_grey_800))
     }
 
+    fun trickHelp(view: View){
+        val intent = Intent(this, VideoPlayer::class.java)
+        startActivity(intent)
+    }
     fun restartGame(view: View){
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
         val builder = AlertDialog.Builder(this)

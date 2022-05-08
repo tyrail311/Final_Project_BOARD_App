@@ -80,11 +80,13 @@ class MainActivity : AppCompatActivity() {
         if(person1.isEmpty())
         {
             makeDialog("Player 1 Name Empty", "Player 1 name cannot be empty. Please enter a name", R.id.editTextPersonName)
+            return
         }
 
         if(person2.isEmpty())
         {
             makeDialog("Player 2 Name Empty", "Player 2 name cannot be empty. Please enter a name", R.id.editTextPersonName2)
+            return
         }
 
         val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
