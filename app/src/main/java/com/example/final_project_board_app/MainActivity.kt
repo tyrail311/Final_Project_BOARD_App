@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE = 123
     private val TAG = "logout"
     private var activity = ""
+    private var clickable = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         activity = sharedPreferences.getString("activity", "") ?: ""
+        clickable = sharedPreferences.getBoolean("clickable", true)
         Log.d(TAG, "$activity")
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null)
@@ -119,9 +121,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun resumeGame(view: View){
+        val sharedPreferences = getSharedPreferences(FILE_NAME, MODE_PRIVATE)
+        var editor = sharedPreferences.edit()
         var intent: Intent? = null
-        if (activity == "TrickList")
+        if (activity == "TrickList" || clickable == false) {
+            editor.putBoolean("clickable", true)
+            editor.apply()
             intent = Intent(this, TrickList::class.java)
+        }
         else
             intent = Intent(this, TrickValidation::class.java)
 
