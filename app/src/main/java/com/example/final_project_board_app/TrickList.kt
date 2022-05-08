@@ -5,13 +5,18 @@ import android.view.View
 import android.widget.TextView
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
@@ -46,6 +51,37 @@ class TrickList : AppCompatActivity() {
         realtimeUpdate()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+
+                AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            startRegisterActivity()
+                        }
+                        else {
+                            Log.e(TAG, "Task is not successful:${task.exception}")
+                        }
+                    }
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+    private fun startRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     fun addTrick(view: View) {
         if (trick_difficulty_input.text.isEmpty() || trick_name_input.text.isEmpty())
         {

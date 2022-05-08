@@ -3,6 +3,8 @@ package com.example.final_project_board_app
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.trick_validation.*
 
@@ -178,6 +181,38 @@ class TrickValidation: AppCompatActivity() {
             val intent = Intent(this, TrickList::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+
+                AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            startRegisterActivity()
+                        }
+                        else {
+                            Log.e(TAG, "Task is not successful:${task.exception}")
+                        }
+                    }
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+    private fun startRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onStop() {
