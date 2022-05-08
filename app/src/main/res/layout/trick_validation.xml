@@ -22,6 +22,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/player1_text"
         app:layout_constraintTop_toBottomOf="@+id/trick_help" />
 
@@ -42,6 +43,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="40dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/player2_text"
@@ -164,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:text="For an example of the trick, blick the button below to see a video"
+        android:text="For an example of the trick, click the button below to see a video"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
