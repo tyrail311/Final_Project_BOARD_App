@@ -21,7 +21,6 @@ class TrickListAdapter(private val tricks: List<Trick>, private val context: Con
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val trickName = itemView.findViewById<TextView>(R.id.trick_name)
         val trickDifficulty = itemView.findViewById<TextView>(R.id.trick_difficulty)
-//        val trickImage = itemView.findViewById<ImageView>(R.id.trick_image)
 
         init {
 
@@ -48,10 +47,6 @@ class TrickListAdapter(private val tricks: List<Trick>, private val context: Con
         val currentItem = tricks[position]
         holder.trickName.text = currentItem.trick
         holder.trickDifficulty.text = currentItem.difficulty
-
-//        Glide.with(holder.itemView.context)
-//            .load(currentItem.link)
-////            .into(holder.trickImage)
     }
 
     override fun getItemCount(): Int {

@@ -47,13 +47,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
-                // User chose the "logout" item, logout the user then
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
 
                 AuthUI.getInstance().signOut(this)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // After logout, start the RegisterActivity again
                             startRegisterActivity()
                         }
                         else {
@@ -63,8 +61,6 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> {
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 super.onOptionsItemSelected(item)
             }
         }
@@ -72,7 +68,6 @@ class MainActivity : AppCompatActivity() {
     private fun startRegisterActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
-        // Make sure to call finish(), otherwise the user would be able to go back to the MainActivity
         finish()
     }
     fun startGame(view: View)

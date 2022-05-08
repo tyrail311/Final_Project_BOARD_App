@@ -42,8 +42,6 @@ class RegisterActivity : AppCompatActivity() {
             .setAlwaysShowSignInMethodScreen(true) // use this if you have only one provider and really want the see the signin page
             .setIsSmartLockEnabled(false)
             .build()
-
-        // launch the sign-in intent above
         startActivityForResult(intent, SIGN_IN_REQUEST_CODE)
 
     }

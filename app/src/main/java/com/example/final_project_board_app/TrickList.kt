@@ -41,7 +41,6 @@ class TrickList : AppCompatActivity() {
         val swipeToRefresh = findViewById<SwipeRefreshLayout>(R.id.swipe_to_refresh)
         swipeToRefresh.setOnRefreshListener {
             realtimeUpdate()
-//            recyclerView.adapter = TrickListAdapter(tricks)
             swipeToRefresh.isRefreshing = false
         }
 
@@ -54,32 +53,8 @@ class TrickList : AppCompatActivity() {
             findViewById<TextView>(R.id.player_turn).text = "It is $player1's turn..."
         else
             findViewById<TextView>(R.id.player_turn).text = "It is $player2's turn..."
-
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        // Get real time update
-        fireBaseDb.collection("tricks")
-            .orderBy("id")
-            .addSnapshotListener{ snapshots, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-
-                if (snapshots != null) {
-                    // This will be called every time a document is updated
-                    Log.d(TAG, "onEvent: -----------------------------")
-
-                    val stringBuilder = StringBuilder()
-                    // Convert documents to a collection of Contact
-                    val tricks = snapshots.toObjects<Trick>()
-
-                    // Show all the records in a recyclerView with updated data
-                    showDataInRecyclerView(tricks)
-
-                } else {
-                    Log.d(TAG, "Current data: null")
-                }
-            }
+        realtimeUpdate()
     }
 
     fun addTrick(view: View) {
@@ -120,14 +95,11 @@ class TrickList : AppCompatActivity() {
                 }
 
                 if (snapshots != null) {
-                    // This will be called every time a document is updated
                     Log.d(TAG, "onEvent: -----------------------------")
 
                     val stringBuilder = StringBuilder()
-                    // Convert documents to a collection of Contact
                     val tricks = snapshots.toObjects<Trick>()
 
-                    // Show all the records in a recyclerView with updated data
                     showDataInRecyclerView(tricks)
 
                 } else {
